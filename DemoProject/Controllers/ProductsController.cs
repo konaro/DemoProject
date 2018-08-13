@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using DataSource;
+using Microsoft.AspNetCore.Mvc;
+using Model;
+using System.Collections.Generic;
 
 namespace DemoProject.Controllers
 {
@@ -7,13 +9,20 @@ namespace DemoProject.Controllers
     [Route("api/Products")]
     public class ProductsController : Controller
     {
+        private readonly IRepository<Product> _repository;
+
+        public ProductsController(IRepository<Product> repository)
+        {
+            _repository = repository;
+        }
+
         /// <summary>
         /// 取得商品清單
         /// </summary>
         /// <returns></returns>
-        public object GetAll()
+        public IEnumerable<Product> GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.ReadAll();
         }
     }
 }

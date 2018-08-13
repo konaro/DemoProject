@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DataSource;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Model;
 
 namespace DemoProject
 {
@@ -18,8 +21,11 @@ namespace DemoProject
         public void ConfigureServices(IServiceCollection services)
         {
             // 註冊 EF Core
-            //services.AddDbContext<DEMOContext>(options =>
-            //         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DEMOContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // 註冊 Product repository
+            services.AddScoped<IRepository<Product>, ProductRepository>();
 
             services.AddMvc();
         }

@@ -1,6 +1,8 @@
-﻿using DemoProject.Controllers;
+﻿using DataSource;
+using DemoProject.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model;
+using NSubstitute;
 using System.Collections.Generic;
 
 namespace DemoProject.Test
@@ -19,7 +21,10 @@ namespace DemoProject.Test
                 new Product { Id = 3, Name = "名偵探-ㄎㄅ", Price = 250, InStock = 5, Brief = "都在唬爛" },
                 new Product { Id = 4, Name = "這不是我認識的偵探", Price = 520, InStock = 0, Brief = "._." }
             };
-            var controller = new ProductsController();
+            var stubRepository = Substitute.For<IRepository<Product>>();
+            stubRepository.ReadAll().Returns(expected);
+
+            var controller = new ProductsController(stubRepository);
 
             // Act
             var actual = controller.GetAll();

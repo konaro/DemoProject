@@ -33,13 +33,33 @@ namespace DemoProject.Test
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //public void 取得所選商品總計金額()
-        //{
-        //    // Arrange
-        //    // Act
-        //    // Assert
-        //}
+        [TestMethod]
+        public void 取得所選商品總計金額()
+        {
+            // Arrange
+            var input = new List<Product>
+            {
+                new Product { Id = 1 },
+                new Product { Id = 2 }
+            };
+
+            var selected = new List<Product>
+            {
+                new Product { Id = 1, Name = "科幻四小俠", Price = 299, InStock = 6, Brief = "垃圾書刊" },
+                new Product { Id = 2, Name = "宇宙科幻", Price = 560, InStock = 2, Brief = "暢銷書籍" }
+            };
+
+            var expected = 859m;
+            var stubRepository = Substitute.For<IRepository<Product>>();
+            stubRepository.ReadRowsByIds(Arg.Any<List<Product>>()).Returns(selected);
+            var controller = new ProductsController(stubRepository);
+
+            // Act
+            var actual = controller.GetSum(input);
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
 
         //[TestMethod]
         //public void 取得所選商品總計金額_未選擇商品()

@@ -1,7 +1,9 @@
 ﻿using DataSource;
 using Microsoft.AspNetCore.Mvc;
 using Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DemoProject.Controllers
 {
@@ -23,6 +25,17 @@ namespace DemoProject.Controllers
         public IEnumerable<Product> GetAll()
         {
             return _repository.ReadAll();
+        }
+
+        /// <summary>
+        /// 取得總計金額
+        /// </summary>
+        /// <param name="products">選定的商品</param>
+        /// <returns></returns>
+        public decimal GetSum(List<Product> products)
+        {
+            var selected = _repository.ReadRowsByIds(products);
+            return selected.Sum(r => r.Price);
         }
     }
 }

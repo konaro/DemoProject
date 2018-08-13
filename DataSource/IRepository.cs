@@ -9,5 +9,12 @@ namespace DataSource
         /// </summary>
         /// <returns></returns>
         IEnumerable<TEntity> ReadAll();
+
+        /// <summary>
+        /// 查詢特定資料 (By ids)
+        /// </summary>
+        /// <param name="condition">查詢條件</param>
+        /// <returns></returns>
+        IEnumerable<TEntity> ReadRowsByIds(List<TEntity> condition);
     }
 }

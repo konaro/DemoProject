@@ -34,8 +34,14 @@ namespace DemoProject.Controllers
         /// <returns></returns>
         public decimal GetSum(List<Product> products)
         {
-            var selected = _repository.ReadRowsByIds(products);
-            return selected.Sum(r => r.Price);
+            // 未選擇商品
+            if (products.Count() == 0)
+                return 0;
+            else
+            {
+                var selected = _repository.ReadRowsByIds(products);
+                return selected.Sum(r => r.Price);
+            }
         }
     }
 }

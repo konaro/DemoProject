@@ -61,12 +61,22 @@ namespace DemoProject.Test
             Assert.AreEqual(expected, actual);
         }
 
-        //[TestMethod]
-        //public void 取得所選商品總計金額_未選擇商品()
-        //{
-        //    // Arrange
-        //    // Act
-        //    // Assert
-        //}
+        [TestMethod]
+        public void 取得所選商品總計金額_未選擇商品()
+        {
+            // Arrange
+            var input = new List<Product>();
+
+            var expected = 0;
+            var stubRepository = Substitute.For<IRepository<Product>>();
+            var controller = new ProductsController(stubRepository);
+
+            // Act
+            var actual = controller.GetSum(input);
+
+            // Assert
+            stubRepository.DidNotReceive().ReadRowsByIds(Arg.Any<List<Product>>());
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

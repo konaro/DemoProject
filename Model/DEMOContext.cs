@@ -1,21 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Model
 {
     public partial class DEMOContext : DbContext
     {
-        public virtual DbSet<Product> Product { get; set; }
+        public DEMOContext()
+        {
+        }
 
         public DEMOContext(DbContextOptions<DEMOContext> options)
             : base(options)
-        { }
+        {
+        }
+
+        public virtual DbSet<Product> Product { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasAnnotation("Relational:DefaultSchema", "prod");
+
             modelBuilder.Entity<Product>(entity =>
             {
-                entity.ToTable("Product", "prod");
-
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Brief)
@@ -33,6 +40,10 @@ namespace Model
                     .HasColumnName("price")
                     .HasColumnType("decimal(7, 2)");
             });
+
+            OnModelCreatingPartial(modelBuilder);
         }
+
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

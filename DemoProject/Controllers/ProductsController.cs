@@ -1,7 +1,6 @@
 ﻿using DataSource;
 using Microsoft.AspNetCore.Mvc;
 using Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,11 +10,11 @@ namespace DemoProject.Controllers
     [Route("api/Products")]
     public class ProductsController : Controller
     {
-        private readonly IRepository<Product> _repository;
+        private readonly IRepository<Product> repository;
 
         public ProductsController(IRepository<Product> repository)
         {
-            _repository = repository;
+            this.repository = repository;
         }
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace DemoProject.Controllers
         /// <returns></returns>
         public IEnumerable<Product> GetAll()
         {
-            return _repository.ReadAll();
+            return repository.ReadAll();
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace DemoProject.Controllers
                 return 0;
             else
             {
-                var selected = _repository.ReadRowsByIds(products);
+                var selected = repository.ReadRowsByIds(products);
                 return selected.Sum(r => r.Price);
             }
         }

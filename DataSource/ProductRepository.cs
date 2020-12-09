@@ -6,11 +6,11 @@ namespace DataSource
 {
     public class ProductRepository : IRepository<Product>
     {
-        private readonly DEMOContext _context;
+        private readonly DEMOContext context;
 
         public ProductRepository(DEMOContext context)
         {
-            _context = context;
+            this.context = context;
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace DataSource
         /// <returns></returns>
         public IEnumerable<Product> ReadAll()
         {
-            return _context.Product;
+            return context.Product;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace DataSource
         /// <returns></returns>
         public IEnumerable<Product> ReadRowsByIds(List<Product> condition)
         {
-            return _context.Product.Where(r => condition.Select(c => c.Id).Contains(r.Id));
+            return context.Product.Where(r => condition.Select(c => c.Id).Contains(r.Id));
         }
     }
 }
